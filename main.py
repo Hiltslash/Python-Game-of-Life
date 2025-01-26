@@ -79,6 +79,7 @@ def main():
 					print("You found a very helpful rescource. +1 INTEL, SCHOOL BOOST ACTIVATED")
 					statlist["INTELLEGENCE"] += 1
 					schoolboost = True
+					schoolboosttimer=5
 				elif randoma < 4 and randoma > 1:
 					print("You studied. +1 INTEL, -1 MORALE, +1 EXP")
 					statlist["INTELLEGENCE"] += 1
