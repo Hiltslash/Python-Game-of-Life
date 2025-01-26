@@ -15,12 +15,29 @@ playerintellegence = 0
 playerexp = 1
 schoolboost=False
 schoolboosttimer=None
+friends = []
+names = ["John", "Micah", "Brendan", "Ethan", "Sami", "Burton"]
 clear()
-statlist = {"NAME":playername, "AGE":playerage, "MORALE":playermorale, "MONTH":month, "DAY":day, "INTELLEGENCE":playerintellegence, "EXP":playerexp, "School Boost":schoolboost}
-
+statlist = {"NAME":playername, "AGE":playerage, "MORALE":playermorale, "MONTH":month, "DAY":day, "INTELLEGENCE":playerintellegence, "EXP":playerexp, "SCHOOL BOOST":schoolboost, "FRIENDS":friends}
+events = ["SOCIAL", "SKILL", "SCARY"]
 def stats():
 	global day, month, playerage
 	print(f"AGE: {playerage} | MONTH: {month} | DAY: {day}\n")
+
+def socialevent():
+	global friends
+	if len(friends) < 1:
+		clear()
+		stats()
+		print("SOCIAL EVENT\n")
+		socialrandom = rand(1,6)
+		if socialrandom == 1:
+			print(f"{names.random}: \"Hello! Can you help me with my homework?\"")
+			print(f"Friend added: {nfriend}")
+		if socialrandom == 2:
+			nfriend = names[socialrandom-1]
+			print(f"{nfriend}: \"Hey, How are you?\"")
+			print(f"Friend added: {nfriend}")
 
 def main():
 	global day, month, playerage, schoolboost, schoolboosttimer
@@ -43,12 +60,14 @@ def main():
 	if playerage < 23:
 		choice = input("Do you:\n1. Go to school\n2. Stay Home\n3. See all stats\n")
 		clear()
-		if statlist["School Boost"] == True:
+		if statlist["SCHOOL BOOST"] == True:
 			random += 10
-
+		eventrandom = rand(1,6)
 		#Go to school
 		if choice == "1":
-			if random < 80 and random > 20:
+			if eventrandom == 1:
+				socialevent()
+			elif random < 80 and random > 20:
 				print("You went to school. +1 INTEL")
 				statlist["INTELLEGENCE"] += 1
 			elif random < 20:
@@ -87,6 +106,10 @@ def main():
 					statlist["EXP"] += 1
 				else:
 					print("You tried to study, but got distracted. Nothing Changed.")
+			elif choicea == "3":
+				clear()
+				stats()
+				print("You spent the day working on a hobby. +1 EXP, +2 MORALE")
 
 
 
@@ -97,7 +120,10 @@ def main():
 			statsee = input("Which stat do you wish to see?")
 			clear()
 			print(f"{statsee.upper()} is:")
-			print(statlist[statsee.upper()])
+			if statsee.upper() in statlist:
+				print(statlist[statsee.upper()])
+			else:
+				print("You may have misspelled, but we couldn't find that stat.")
 			input("Press enter to continue.")
 			clear()
 			main()
